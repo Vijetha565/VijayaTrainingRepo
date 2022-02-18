@@ -153,6 +153,7 @@ namespace ConsoleApp4
 
                                     break;
                                 case "child":
+                                    string v;
 
                                     Console.WriteLine("Account type is child");
                                     Console.WriteLine("Enter the amount you want to deposit");
