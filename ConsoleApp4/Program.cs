@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace ConsoleApp4
 {
@@ -96,12 +97,13 @@ namespace ConsoleApp4
                 username = Console.ReadLine();
                 Console.WriteLine("Enter Age of user:-");
                 age = Console.ReadLine();
-
+                string filepath = "C:\\Employee.txt";
+                StreamWriter sw = new StreamWriter(filepath);
                 empdat.Name = username;
                 empdat.Age = age;
                 empdat.id = userid;
 
-                while (i <= 5)
+                while (i <= 2)
                 {
                     Console.WriteLine("for deposit enter 1 and for withdraw enter 0?");
                     deposit = Convert.ToBoolean(Convert.ToInt32(Console.ReadLine()));
@@ -138,7 +140,7 @@ namespace ConsoleApp4
                                     Console.WriteLine("Account type is current");
                                     Console.WriteLine("Enter the amount you want to deposit");
                                     depamnt = Convert.ToInt32(Console.ReadLine());
-                                    if (depamnt < 200000)
+                                    if (depamnt > 200000)
                                     {
                                         throw new AmountExceeded();
                                     }
@@ -240,16 +242,40 @@ namespace ConsoleApp4
                     dt.Rows.Add(e.id, e.Name, e.Age, e.AccountType, e.Balance);
                 }
                 Console.WriteLine("{0} || {1} || {2} || {3} || {4}", dt.Columns[0], dt.Columns[1], dt.Columns[2],dt.Columns[3],dt.Columns[4]);
+               
+                sw.WriteLine("{0} || {1} || {2} || {3} || {4}", dt.Columns[0], dt.Columns[1], dt.Columns[2], dt.Columns[3], dt.Columns[4]);
                 Console.WriteLine("-----------------------------------------------------------------");
+               
+
                 foreach (DataRow e1 in dt.Rows)
                 {
                     Console.WriteLine("{0} || {1} || {2} || {3} ||{4}", e1[0], e1[1], e1[2],e1[3],e1[4]);
+                    
+                    sw.WriteLine("{0} || {1} || {2} || {3} ||{4}", e1[0], e1[1], e1[2], e1[3], e1[4]);
+                   
                 }
+                sw.Flush();
+                sw.Close();
+                String[] data=File.ReadAllLines(filepath);
+                StreamReader sr = new StreamReader("C:\\Employee.txt");
+                Console.WriteLine("content in the file:");
+               foreach(string s in data)
+                {
+                    Console.WriteLine(s);
+                }
+
+
+
+
+                //Console.WriteLine(data);
+                sr.Close();
                 Console.ReadKey();
             }
         }
     }
 }
+
+
     
     
     
